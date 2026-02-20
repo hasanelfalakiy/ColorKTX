@@ -3,15 +3,32 @@ package io.github.andihasan.colorktx.compose
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Brush
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,21 +38,56 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.andihasan.colorktx.Themes
 
-@Preview(showBackground = true, widthDp = 400, heightDp = 600) // Tentukan ukuran tetap
+@Preview(showBackground = true)
 @Composable
-fun ThemeChooserDialogPreview() {
-    MaterialTheme { // Bungkus dengan Tema agar styling-nya benar
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
+fun ThemeChooserContentPreview() {
+    MaterialTheme {
+        ThemeChooserDialogCompose(
+            onDismiss = { },
+            onDefaultTheme = { },
+            onThemeSelected = { }
+        )
+    }
+}
+
+@Composable
+fun ThemeChooserContent(
+    selectedTheme: Themes?,
+    onThemeClick: (Themes) -> Unit
+) {
+    val themes = Themes.entries
+    Box(modifier = Modifier.height(300.dp)) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(4),
+            contentPadding = PaddingValues(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // Kita panggil langsung isinya (Dialog)
-            // Jika tetap tidak muncul, coba panggil konten di dalam AlertDialog secara langsung
-            ThemeChooserDialogCompose(
-                onDismiss = {},
-                onDefaultTheme = {},
-                onThemeSelected = {}
-            )
+            items(themes) { theme ->
+                val isSelected = selectedTheme == theme
+                Box(
+                    modifier = Modifier
+                        .size(60.dp)
+                        .clip(CircleShape)
+                        // Jika colorResource error di preview, coba ganti sementara ke Color.Gray untuk test
+                        .background(colorResource(theme.primaryColor))
+                        .border(
+                            width = if (isSelected) 3.dp else 0.dp,
+                            color = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
+                            shape = CircleShape
+                        )
+                        .clickable { onThemeClick(theme) },
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (isSelected) {
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = null,
+                            tint = Color.White
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -47,56 +99,31 @@ fun ThemeChooserDialogCompose(
     onDefaultTheme: () -> Unit,
     onThemeSelected: (Themes) -> Unit
 ) {
-    val themes = Themes.entries
-    // State untuk menyimpan pilihan sementara sebelum menekan tombol "Pilih"
     var selectedTheme by remember { mutableStateOf(initialTheme) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Pilih Tema") },
-        text = {
-            Box(modifier = Modifier.height(300.dp)) { // Beri batas tinggi agar scrollable
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(4),
-                    contentPadding = PaddingValues(8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    items(themes) { theme ->
-                        val isSelected = selectedTheme == theme
-                        Box(
-                            modifier = Modifier
-                                .size(60.dp)
-                                .clip(CircleShape)
-                                .background(colorResource(theme.primaryColor))
-                                .border(
-                                    width = if (isSelected) 3.dp else 0.dp,
-                                    color = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
-                                    shape = CircleShape
-                                )
-                                .clickable {
-                                    selectedTheme = theme
-                                },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            if (isSelected) {
-                                Icon(
-                                    imageVector = Icons.Default.Check,
-                                    contentDescription = null,
-                                    tint = Color.White // Atur kontras sesuai kebutuhan
-                                )
-                            }
-                        }
-                    }
-                }
+        title = {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = Icons.Default.Brush,
+                    contentDescription = "Icon tema",
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Pilih Tema")
             }
+        },
+        text = {
+            ThemeChooserContent(
+                selectedTheme = selectedTheme,
+                onThemeClick = { selectedTheme = it }
+            )
         },
         confirmButton = {
             TextButton(
-                onClick = {
-                    selectedTheme?.let { onThemeSelected(it) }
-                },
-                enabled = selectedTheme != null // Tombol aktif jika ada yang dipilih
+                onClick = { selectedTheme?.let { onThemeSelected(it) } },
+                enabled = selectedTheme != null
             ) {
                 Text("Pilih")
             }
@@ -106,15 +133,12 @@ fun ThemeChooserDialogCompose(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Tombol Neutral / Default di sisi kiri
                 TextButton(onClick = {
                     onDefaultTheme()
                     onDismiss()
                 }) {
                     Text("Default")
                 }
-                
-                // Tombol Batal di sisi kanan (sebelum tombol Pilih)
                 TextButton(onClick = onDismiss) {
                     Text("Batal")
                 }
