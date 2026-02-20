@@ -13,8 +13,6 @@ android {
 
     defaultConfig {
         minSdk = 24
-
-        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -34,11 +32,16 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
-    implementation(libs.appcompat.v7)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.runner)
-    androidTestImplementation(libs.espresso.core)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
 }

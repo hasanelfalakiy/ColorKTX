@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ColorKTX</string>
+    <string name="choose_theme">Choose Theme</string>
+    <string name="settings">Settings</string>
 </resources>

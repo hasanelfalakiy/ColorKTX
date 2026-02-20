@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ColorKTX">
         <activity
-            android:name=".MainActivity"
+            android:name="io.github.andihasan.colorktx.app.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
