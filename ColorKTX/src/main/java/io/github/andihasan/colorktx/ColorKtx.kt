@@ -72,7 +72,7 @@ class ColorKtx(context: Context) {
      * Get current static app theme, the theme which is used when dynamic color is disabled
      */
     var staticTheme: Theme
-        get() = Theme.values()[prefs.getInt(APP_THEME, 1)]
+        get() = Theme.values()[prefs.getInt(APP_THEME, 14)] // warna defaul diubah ke 14 (ungu)
         set(value) = prefs.edit { putInt(APP_THEME, value.ordinal) }
 
     /**
