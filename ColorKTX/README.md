@@ -2,4 +2,4 @@ Proyek ini saya salin garpuan dari username [dreamncn](https://github.com/dreamn
 lalu saya ubah sebagian kodenya untuk diupdate
 
 berikut lisensi asli turunan dari repo asal [LISENCE](LISENCE)
-lalu lisensi saya yang juga salinan dari lisensi asal [LISENCE](./LICENSE)
+lalu lisensi saya ada di root repo
