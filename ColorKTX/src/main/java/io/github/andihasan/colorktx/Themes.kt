@@ -22,5 +22,6 @@ enum class Theme(@StyleRes val themeId: Int, @ColorRes val primaryColor: Int) {
     Red(R.style.Theme_ColorKtx_Red, R.color.red_primary),
     Teal(R.style.Theme_ColorKtx_Teal, R.color.teal_primary),
     Violet(R.style.Theme_ColorKtx_Violet, R.color.violet_primary),
-    Yellow(R.style.Theme_ColorKtx_Yellow, R.color.yellow_primary)
+    Yellow(R.style.Theme_ColorKtx_Yellow, R.color.yellow_primary),
+    SoftGreen(R.style.Theme_ColorKtx_SoftGreen, R.color.soft_green_primary)
 }
