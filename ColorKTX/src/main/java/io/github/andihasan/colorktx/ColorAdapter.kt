@@ -11,7 +11,7 @@ class ColorAdapter(private val colorArray: List<Int>) :
     var checkedPosition = -1
         private set
 
-    fun setCheckedPosition(value: Theme) {
+    fun setCheckedPosition(value: Themes) {
         val lastCheckedPosition: Int = checkedPosition
         checkedPosition = value.ordinal
         notifyItemChanged(lastCheckedPosition)

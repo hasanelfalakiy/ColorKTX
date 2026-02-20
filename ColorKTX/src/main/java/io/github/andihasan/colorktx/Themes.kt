@@ -3,7 +3,7 @@ package io.github.andihasan.colorktx
 import androidx.annotation.ColorRes
 import androidx.annotation.StyleRes
 
-enum class Theme(@StyleRes val themeId: Int, @ColorRes val primaryColor: Int) {
+enum class Themes(@StyleRes val themeId: Int, @ColorRes val primaryColor: Int) {
     Amber(R.style.Theme_ColorKtx_Amber, R.color.amber_primary),
     Blue(R.style.Theme_ColorKtx_Blue, R.color.blue_primary),
     BlueVariant(R.style.Theme_ColorKtx_BlueVariant, R.color.blue_variant_primary),

@@ -22,7 +22,7 @@ class ThemeChooserDialogBuilder(private val context: Context) {
     private lateinit var builder: MaterialAlertDialogBuilder
 
     private lateinit var colorAdapter: ColorAdapter
-    private val themes = Theme.values()
+    private val themes = Themes.values()
 
     init {
         createDialog()
@@ -151,6 +151,6 @@ class ThemeChooserDialogBuilder(private val context: Context) {
     }
 
     fun interface OnClickListener {
-        fun onClick(position: Int, theme: Theme)
+        fun onClick(position: Int, theme: Themes)
     }
 }
