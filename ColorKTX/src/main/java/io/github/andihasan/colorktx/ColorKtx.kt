@@ -9,7 +9,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 
-class ThemeEngine(context: Context) {
+class ColorKtx(context: Context) {
     private val prefs = context.getSharedPreferences("theme_engine_prefs", Context.MODE_PRIVATE)
 
     private var isFirstStart
@@ -65,7 +65,7 @@ class ThemeEngine(context: Context) {
      * @return a dynamic theme if [isDynamicTheme] is enabled or a static theme otherwise.
      */
     fun getTheme(): Int {
-        return if (hasS() && isDynamicTheme) R.style.Theme_ThemeEngine_Dynamic else staticTheme.themeId
+        return if (hasS() && isDynamicTheme) R.style.Theme_ColorKtx_Dynamic else staticTheme.themeId
     }
 
     /**
@@ -94,10 +94,10 @@ class ThemeEngine(context: Context) {
     }
 
     companion object {
-        private var INSTANCE: ThemeEngine? = null
+        private var INSTANCE: ColorKtx? = null
 
         @JvmStatic
-        fun getInstance(context: Context): ThemeEngine {
+        fun getInstance(context: Context): ColorKtx {
             val currentInstance = INSTANCE
 
             if (currentInstance != null) {
@@ -105,7 +105,7 @@ class ThemeEngine(context: Context) {
             }
 
             synchronized(this) {
-                val newInstance = ThemeEngine(context)
+                val newInstance = ColorKtx(context)
                 INSTANCE = newInstance
                 return newInstance
             }
@@ -148,7 +148,7 @@ private class ThemeEngineActivityCallback : ActivityLifecycleCallbacks {
         activity: Activity,
         savedInstanceState: Bundle?
     ) {
-        ThemeEngine.applyToActivity(activity)
+        ColorKtx.applyToActivity(activity)
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}

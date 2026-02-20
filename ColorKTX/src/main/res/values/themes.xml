@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.ThemeEngine.Dynamic" parent="ThemeOverlay.Material3.DynamicColors.DayNight" />
+    <style name="Theme.ColorKtx.Dynamic" parent="ThemeOverlay.Material3.DynamicColors.DayNight" />
 
-    <style name="Theme.ThemeEngine.Amber" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.Amber" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/amber_primary</item>
         <item name="colorPrimaryVariant">@color/amber_primary</item>
         <item name="colorOnPrimary">@color/amber_onPrimary</item>
@@ -33,7 +33,7 @@
         <item name="colorPrimaryInverse">@color/amber_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.Blue" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.Blue" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/blue_primary</item><item name="colorPrimaryVariant">@color/blue_primary</item>
         <item name="colorOnPrimary">@color/blue_onPrimary</item>
         <item name="colorPrimaryContainer">@color/blue_primaryContainer</item>
@@ -62,7 +62,7 @@
         <item name="colorPrimaryInverse">@color/blue_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.BlueVariant" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.BlueVariant" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/blue_variant_primary</item><item name="colorPrimaryVariant">@color/blue_variant_primary</item>
         <item name="colorOnPrimary">@color/blue_variant_onPrimary</item>
         <item name="colorPrimaryContainer">@color/blue_variant_primaryContainer</item>
@@ -91,7 +91,7 @@
         <item name="colorPrimaryInverse">@color/blue_variant_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.Brown" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.Brown" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/brown_primary</item><item name="colorPrimaryVariant">@color/brown_primary</item>
         <item name="colorOnPrimary">@color/brown_onPrimary</item>
         <item name="colorPrimaryContainer">@color/brown_primaryContainer</item>
@@ -120,7 +120,7 @@
         <item name="colorPrimaryInverse">@color/brown_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.Cyan" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.Cyan" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/cyan_primary</item><item name="colorPrimaryVariant">@color/cyan_primary</item>
         <item name="colorOnPrimary">@color/cyan_onPrimary</item>
         <item name="colorPrimaryContainer">@color/cyan_primaryContainer</item>
@@ -149,7 +149,7 @@
         <item name="colorPrimaryInverse">@color/cyan_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.DeepOrange" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.DeepOrange" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/deep_orange_primary</item><item name="colorPrimaryVariant">@color/deep_orange_primary</item>
         <item name="colorOnPrimary">@color/deep_orange_onPrimary</item>
         <item name="colorPrimaryContainer">@color/deep_orange_primaryContainer</item>
@@ -178,7 +178,7 @@
         <item name="colorPrimaryInverse">@color/deep_orange_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.DeepPurple" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.DeepPurple" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/deep_purple_primary</item><item name="colorPrimaryVariant">@color/deep_purple_primary</item>
         <item name="colorOnPrimary">@color/deep_purple_onPrimary</item>
         <item name="colorPrimaryContainer">@color/deep_purple_primaryContainer</item>
@@ -207,7 +207,7 @@
         <item name="colorPrimaryInverse">@color/deep_purple_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.Green" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.Green" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/green_primary</item><item name="colorPrimaryVariant">@color/green_primary</item>
         <item name="colorOnPrimary">@color/green_onPrimary</item>
         <item name="colorPrimaryContainer">@color/green_primaryContainer</item>
@@ -236,7 +236,7 @@
         <item name="colorPrimaryInverse">@color/green_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.Indigo" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.Indigo" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/indigo_primary</item><item name="colorPrimaryVariant">@color/indigo_primary</item>
         <item name="colorOnPrimary">@color/indigo_onPrimary</item>
         <item name="colorPrimaryContainer">@color/indigo_primaryContainer</item>
@@ -265,7 +265,7 @@
         <item name="colorPrimaryInverse">@color/indigo_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.LightBlue" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.LightBlue" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/blue_primary</item><item name="colorPrimaryVariant">@color/blue_primary</item>
         <item name="colorOnPrimary">@color/blue_onPrimary</item>
         <item name="colorPrimaryContainer">@color/blue_primaryContainer</item>
@@ -294,7 +294,7 @@
         <item name="colorPrimaryInverse">@color/blue_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.LightGreen" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.LightGreen" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/green_primary</item><item name="colorPrimaryVariant">@color/green_primary</item>
         <item name="colorOnPrimary">@color/green_onPrimary</item>
         <item name="colorPrimaryContainer">@color/green_primaryContainer</item>
@@ -323,7 +323,7 @@
         <item name="colorPrimaryInverse">@color/green_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.Lime" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.Lime" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/lime_primary</item><item name="colorPrimaryVariant">@color/lime_primary</item>
         <item name="colorOnPrimary">@color/lime_onPrimary</item>
         <item name="colorPrimaryContainer">@color/lime_primaryContainer</item>
@@ -352,7 +352,7 @@
         <item name="colorPrimaryInverse">@color/lime_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.Orange" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.Orange" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/orange_primary</item><item name="colorPrimaryVariant">@color/orange_primary</item>
         <item name="colorOnPrimary">@color/orange_onPrimary</item>
         <item name="colorPrimaryContainer">@color/orange_primaryContainer</item>
@@ -381,7 +381,7 @@
         <item name="colorPrimaryInverse">@color/orange_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.Pink" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.Pink" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/pink_primary</item><item name="colorPrimaryVariant">@color/pink_primary</item>
         <item name="colorOnPrimary">@color/pink_onPrimary</item>
         <item name="colorPrimaryContainer">@color/pink_primaryContainer</item>
@@ -410,7 +410,7 @@
         <item name="colorPrimaryInverse">@color/pink_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.Purple" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.Purple" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/purple_primary</item><item name="colorPrimaryVariant">@color/purple_primary</item>
         <item name="colorOnPrimary">@color/purple_onPrimary</item>
         <item name="colorPrimaryContainer">@color/purple_primaryContainer</item>
@@ -439,7 +439,7 @@
         <item name="colorPrimaryInverse">@color/purple_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.Red" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.Red" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/red_primary</item><item name="colorPrimaryVariant">@color/red_primary</item>
         <item name="colorOnPrimary">@color/red_onPrimary</item>
         <item name="colorPrimaryContainer">@color/red_primaryContainer</item>
@@ -468,7 +468,7 @@
         <item name="colorPrimaryInverse">@color/red_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.Teal" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.Teal" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/teal_primary</item><item name="colorPrimaryVariant">@color/teal_primary</item>
         <item name="colorOnPrimary">@color/teal_onPrimary</item>
         <item name="colorPrimaryContainer">@color/teal_primaryContainer</item>
@@ -497,7 +497,7 @@
         <item name="colorPrimaryInverse">@color/teal_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.Violet" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.Violet" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/violet_primary</item><item name="colorPrimaryVariant">@color/violet_primary</item>
         <item name="colorOnPrimary">@color/violet_onPrimary</item>
         <item name="colorPrimaryContainer">@color/violet_primaryContainer</item>
@@ -526,7 +526,7 @@
         <item name="colorPrimaryInverse">@color/violet_primaryInverse</item>
     </style>
 
-    <style name="Theme.ThemeEngine.Yellow" parent="ThemeOverlay.Material3">
+    <style name="Theme.ColorKtx.Yellow" parent="ThemeOverlay.Material3">
         <item name="colorPrimary">@color/yellow_primary</item><item name="colorPrimaryVariant">@color/yellow_primary</item>
         <item name="colorOnPrimary">@color/yellow_onPrimary</item>
         <item name="colorPrimaryContainer">@color/yellow_primaryContainer</item>

@@ -31,10 +31,10 @@ class ThemeChooserDialogBuilder(private val context: Context) {
     private fun createDialog() {
         val binding = RecyclerviewBinding.inflate(LayoutInflater.from(context))
 
-        val themeEngine = ThemeEngine.getInstance(context)
+        val colorKtx = ColorKtx.getInstance(context)
         val colorArray = themes.map { it.primaryColor }
         colorAdapter = ColorAdapter(colorArray)
-        colorAdapter.setCheckedPosition(themeEngine.staticTheme)
+        colorAdapter.setCheckedPosition(colorKtx.staticTheme)
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(context, 4)
             adapter = colorAdapter

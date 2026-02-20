@@ -3,13 +3,11 @@ package io.github.andihasan.colorktx.app
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import io.github.andihasan.colorktx.ColorKtx
 import io.github.andihasan.colorktx.ThemeChooserDialogBuilder
-import io.github.andihasan.colorktx.ThemeEngine
-import io.github.andihasan.colorktx.app.R
 import io.github.andihasan.colorktx.app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        ThemeEngine.Companion.applyToActivity(this)
+        ColorKtx.Companion.applyToActivity(this)
         super.onCreate(savedInstanceState)
         // enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -29,18 +27,18 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val themeEngine = ThemeEngine.Companion.getInstance(this)
+        val colorKtx = ColorKtx.Companion.getInstance(this)
 
         binding.changeTheme.setOnClickListener {
             ThemeChooserDialogBuilder(this)
                 .setTitle(R.string.choose_theme)
                 .setPositiveButton("OK") { _, theme ->
-                    themeEngine.staticTheme = theme
+                    colorKtx.staticTheme = theme
                     recreate()
                 }
                 .setNegativeButton("Cancel")
                 .setNeutralButton("Default") { _, _ ->
-                    themeEngine.resetTheme()
+                    colorKtx.resetTheme()
                     recreate()
                 }
                 .setIcon(R.drawable.ic_brush)

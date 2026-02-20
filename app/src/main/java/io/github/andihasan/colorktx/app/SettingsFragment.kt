@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import io.github.andihasan.colorktx.ThemeChooserDialogBuilder
-import io.github.andihasan.colorktx.ThemeEngine
+import io.github.andihasan.colorktx.ColorKtx
 import io.github.andihasan.colorktx.ThemeMode
 import io.github.andihasan.colorktx.hasS
 import io.github.andihasan.colorktx.app.R
@@ -15,7 +15,7 @@ import io.github.andihasan.colorktx.app.databinding.FragmentSettingsBinding
 
 class SettingsFragment : BottomSheetDialogFragment() {
 
-    private lateinit var themeEngine: ThemeEngine
+    private lateinit var colorKtx: ColorKtx
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
@@ -23,21 +23,21 @@ class SettingsFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        themeEngine = ThemeEngine.Companion.getInstance(requireContext())
+        colorKtx = ColorKtx.Companion.getInstance(requireContext())
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (hasS()) {
-            binding.dynamicGroup.check(if (themeEngine.isDynamicTheme) R.id.dynamic_on else R.id.dynamic_off)
+            binding.dynamicGroup.check(if (colorKtx.isDynamicTheme) R.id.dynamic_on else R.id.dynamic_off)
             binding.dynamicGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
                 if (isChecked) {
-                    when (checkedId) {
-                        R.id.dynamic_off -> themeEngine.isDynamicTheme = false
-                        R.id.dynamic_on -> themeEngine.isDynamicTheme = true
+                    val newValue = (checkedId == R.id.dynamic_on)
+                    if (colorKtx.isDynamicTheme != newValue) { // Tambahkan pengecekan ini
+                        colorKtx.isDynamicTheme = newValue
+                        requireActivity().recreate()
                     }
-                    requireActivity().recreate()
                 }
             }
         } else {
@@ -45,7 +45,7 @@ class SettingsFragment : BottomSheetDialogFragment() {
             binding.dynamicGroup.isVisible = false
         }
         binding.themeGroup.check(
-            when (themeEngine.themeMode) {
+            when (colorKtx.themeMode) {
                 ThemeMode.AUTO -> R.id.auto_theme
                 ThemeMode.LIGHT -> R.id.light_theme
                 ThemeMode.DARK -> R.id.dark_theme
@@ -53,10 +53,10 @@ class SettingsFragment : BottomSheetDialogFragment() {
             }
         )
 
-        binding.trueBlackGroup.check(if (themeEngine.isTrueBlack) R.id.true_black_on else R.id.true_black_off)
+        binding.trueBlackGroup.check(if (colorKtx.isTrueBlack) R.id.true_black_on else R.id.true_black_off)
         binding.trueBlackGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
-                themeEngine.isTrueBlack = when (checkedId) {
+                colorKtx.isTrueBlack = when (checkedId) {
                     R.id.true_black_on -> true
                     else -> false
                 }
@@ -66,7 +66,7 @@ class SettingsFragment : BottomSheetDialogFragment() {
 
         binding.themeGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
-                themeEngine.themeMode = when (checkedId) {
+                colorKtx.themeMode = when (checkedId) {
                     R.id.auto_theme -> ThemeMode.AUTO
                     R.id.light_theme -> ThemeMode.LIGHT
                     R.id.dark_theme -> ThemeMode.DARK
@@ -78,12 +78,12 @@ class SettingsFragment : BottomSheetDialogFragment() {
             ThemeChooserDialogBuilder(requireContext())
                 .setTitle(R.string.choose_theme)
                 .setPositiveButton("OK") { _, theme ->
-                    themeEngine.staticTheme = theme
+                    colorKtx.staticTheme = theme
                     requireActivity().recreate()
                 }
                 .setNegativeButton("Cancel")
                 .setNeutralButton("Default") { _, _ ->
-                    themeEngine.resetTheme()
+                    colorKtx.resetTheme()
                     requireActivity().recreate()
                 }
                 .setIcon(R.drawable.ic_brush)
