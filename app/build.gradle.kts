@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.andihasan.colorktx"
+    namespace = "io.github.andihasan.colorktx.app"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -43,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":ColorKTX"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

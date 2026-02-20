@@ -1,4 +1,4 @@
-package io.github.andihasan.colorktx
+package io.github.andihasan.sampleapp
 
 import org.junit.Test
 
