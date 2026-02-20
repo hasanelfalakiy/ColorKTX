@@ -14,7 +14,7 @@ class ColorKtx(context: Context) {
 
     private var isFirstStart
         get() = prefs.getBoolean(FIRST_START, true)
-        set(value) = prefs.edit { putBoolean(FIRST_START, value) }
+        set(value) = prefs.edit(commit = true) { putBoolean(FIRST_START, value) }
 
     init {
         if (isFirstStart) {
@@ -73,13 +73,23 @@ class ColorKtx(context: Context) {
      */
     var staticTheme: Themes
         get() = Themes.values()[prefs.getInt(APP_THEME, 14)] // warna defaul diubah ke 14 (ungu)
-        set(value) = prefs.edit { putInt(APP_THEME, value.ordinal) }
+        set(value) {
+            prefs.edit { 
+                putInt(APP_THEME, value.ordinal)
+                // Jika user memilih tema statis, kita nonaktifkan dynamic theme agar perubahannya terlihat
+                putBoolean(DYNAMIC_THEME, false)
+            }
+        }
 
     /**
      * Resets static theme
      */
     fun resetTheme() {
-        prefs.edit { remove(APP_THEME) }
+        prefs.edit { 
+            remove(APP_THEME) 
+            // Reset juga dynamic theme ke default (true jika S+)
+            putBoolean(DYNAMIC_THEME, hasS())
+        }
     }
 
     var isTrueBlack
@@ -89,7 +99,7 @@ class ColorKtx(context: Context) {
     private fun setDefaultValues(context: Context) {
         isTrueBlack = context.getBooleanSafe(R.bool.true_black, false)
         themeMode = context.getIntSafe(R.integer.theme_mode, ThemeMode.AUTO)
-        prefs.edit { putInt(APP_THEME, context.getIntSafe(R.integer.static_theme, 1)) }
+        prefs.edit { putInt(APP_THEME, context.getIntSafe(R.integer.static_theme, 14)) }
         isDynamicTheme = context.getBooleanSafe(R.bool.dynamic_theme, hasS()) && hasS()
     }
 
@@ -105,7 +115,7 @@ class ColorKtx(context: Context) {
             }
 
             synchronized(this) {
-                val newInstance = ColorKtx(context)
+                val newInstance = ColorKtx(context.applicationContext)
                 INSTANCE = newInstance
                 return newInstance
             }
