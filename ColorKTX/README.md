@@ -2,4 +2,4 @@ Proyek ini saya salin garpuan dari username [dreamncn](https://github.com/dreamn
 lalu saya ubah sebagian kodenya untuk diupdate
 
 berikut lisensi asli turunan dari repo asal [LISENCE](LISENCE)
-lalu lisensi saya ada di root repo
+lalu lisensi saya ada di root repo, atau disini [LISENCE](https://github.com/hasanelfalakiy/ColorKTX/blob/gen1/LICENSE)
