@@ -1,4 +1,5 @@
 # ColorKTX
+[![](https://jitpack.io/v/hasanelfalakiy/ColorKTX.svg)](https://jitpack.io/#hasanelfalakiy/ColorKTX)
 
 Library tema Material3 dengan fitur:
 - 20+ tema warna
