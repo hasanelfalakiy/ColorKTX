@@ -10,7 +10,6 @@ import io.github.andihasan.colorktx.ThemeChooserDialogBuilder
 import io.github.andihasan.colorktx.ColorKtx
 import io.github.andihasan.colorktx.ThemeMode
 import io.github.andihasan.colorktx.hasS
-import io.github.andihasan.colorktx.app.R
 import io.github.andihasan.colorktx.app.databinding.FragmentSettingsBinding
 
 class SettingsFragment : BottomSheetDialogFragment() {
@@ -23,7 +22,7 @@ class SettingsFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        colorKtx = ColorKtx.Companion.getInstance(requireContext())
+        colorKtx = ColorKtx.getInstance(requireContext())
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -66,11 +65,15 @@ class SettingsFragment : BottomSheetDialogFragment() {
 
         binding.themeGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
-                colorKtx.themeMode = when (checkedId) {
+                val newMode = when (checkedId) {
                     R.id.auto_theme -> ThemeMode.AUTO
                     R.id.light_theme -> ThemeMode.LIGHT
                     R.id.dark_theme -> ThemeMode.DARK
                     else -> ThemeMode.AUTO
+                }
+                if (colorKtx.themeMode != newMode) {
+                    colorKtx.themeMode = newMode
+                    requireActivity().recreate()
                 }
             }
         }

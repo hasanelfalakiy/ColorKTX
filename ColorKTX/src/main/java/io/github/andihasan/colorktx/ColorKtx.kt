@@ -18,7 +18,7 @@ class ColorKtx(context: Context) {
 
     init {
         if (isFirstStart) {
-            setDefaultValues(context)
+            setDefaultValues()
             isFirstStart = false
         }
     }
@@ -33,7 +33,7 @@ class ColorKtx(context: Context) {
             require(value in 0..2) {
                 "Incompatible value! Set this property with help of ThemeMode object."
             }
-            prefs.edit { putInt(THEME_MODE, value) }
+            prefs.edit(commit = true) { putInt(THEME_MODE, value) }
             AppCompatDelegate.setDefaultNightMode(
                 when (value) {
                     ThemeMode.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
@@ -58,7 +58,7 @@ class ColorKtx(context: Context) {
      */
     var isDynamicTheme
         get() = prefs.getBoolean(DYNAMIC_THEME, Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-        set(value) = prefs.edit { putBoolean(DYNAMIC_THEME, value) }
+        set(value) = prefs.edit(commit = true) { putBoolean(DYNAMIC_THEME, value) }
 
     /**
      * Get current app theme.
@@ -72,11 +72,14 @@ class ColorKtx(context: Context) {
      * Get current static app theme, the theme which is used when dynamic color is disabled
      */
     var staticTheme: Themes
-        get() = Themes.values()[prefs.getInt(APP_THEME, 14)] // warna defaul diubah ke 14 (ungu)
+        get() {
+            val ordinal = prefs.getInt(APP_THEME, 14)
+            return if (ordinal in Themes.entries.indices) Themes.entries[ordinal] else Themes.entries[14]
+        }
         set(value) {
-            prefs.edit { 
+            prefs.edit(commit = true) { 
                 putInt(APP_THEME, value.ordinal)
-                // Jika user memilih tema statis, kita nonaktifkan dynamic theme agar perubahannya terlihat
+                // Disable dynamic theme when a specific color is picked
                 putBoolean(DYNAMIC_THEME, false)
             }
         }
@@ -85,22 +88,38 @@ class ColorKtx(context: Context) {
      * Resets static theme
      */
     fun resetTheme() {
-        prefs.edit { 
+        prefs.edit(commit = true) { 
             remove(APP_THEME) 
-            // Reset juga dynamic theme ke default (true jika S+)
             putBoolean(DYNAMIC_THEME, hasS())
         }
     }
 
     var isTrueBlack
         get() = prefs.getBoolean(TRUE_BLACK, false)
-        set(value) = prefs.edit { putBoolean(TRUE_BLACK, value) }
+        set(value) = prefs.edit(commit = true) { putBoolean(TRUE_BLACK, value) }
 
-    private fun setDefaultValues(context: Context) {
-        isTrueBlack = context.getBooleanSafe(R.bool.true_black, false)
-        themeMode = context.getIntSafe(R.integer.theme_mode, ThemeMode.AUTO)
-        prefs.edit { putInt(APP_THEME, context.getIntSafe(R.integer.static_theme, 14)) }
-        isDynamicTheme = context.getBooleanSafe(R.bool.dynamic_theme, hasS()) && hasS()
+    private fun setDefaultValues() {
+        // Hanya set default jika belum pernah di-set sebelumnya
+        if (!prefs.contains(APP_THEME)) {
+            prefs.edit(commit = true) { 
+                putInt(APP_THEME, 14) // Default: Purple
+            }
+        }
+        if (!prefs.contains(THEME_MODE)) {
+            prefs.edit(commit = true) {
+                putInt(THEME_MODE, ThemeMode.AUTO)
+            }
+        }
+        if (!prefs.contains(TRUE_BLACK)) {
+            prefs.edit(commit = true) {
+                putBoolean(TRUE_BLACK, false)
+            }
+        }
+        if (!prefs.contains(DYNAMIC_THEME)) {
+            prefs.edit(commit = true) {
+                putBoolean(DYNAMIC_THEME, hasS())
+            }
+        }
     }
 
     companion object {
@@ -137,11 +156,37 @@ class ColorKtx(context: Context) {
         @JvmStatic
         fun applyToActivity(activity: Activity) {
             with(getInstance(activity)) {
+                // Apply night mode terlebih dahulu
+                AppCompatDelegate.setDefaultNightMode(nightMode)
+                
+                // Untuk ComponentActivity (non-AppCompat), kita perlu set night mode secara manual
+                // pada configuration activity agar isSystemInDarkTheme() bekerja dengan benar
+                val currentNightMode = when (themeMode) {
+                    ThemeMode.LIGHT -> false
+                    ThemeMode.DARK -> true
+                    else -> null // Follow system, tidak perlu override
+                }
+                
+                if (currentNightMode != null) {
+                    val configuration = activity.resources.configuration
+                    val newUiMode = if (currentNightMode) {
+                        android.content.res.Configuration.UI_MODE_NIGHT_YES
+                    } else {
+                        android.content.res.Configuration.UI_MODE_NIGHT_NO
+                    }
+                    
+                    if ((configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) != newUiMode) {
+                        configuration.uiMode = (configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK.inv()) or newUiMode
+                        @Suppress("DEPRECATION")
+                        activity.resources.updateConfiguration(configuration, activity.resources.displayMetrics)
+                    }
+                }
+                
+                // Terapkan tema dari library ColorKTX
                 activity.theme.applyStyle(getTheme(), true)
                 if (isTrueBlack) {
                     activity.theme.applyStyle(R.style.ThemeOverlay_Black, true)
                 }
-                AppCompatDelegate.setDefaultNightMode(nightMode)
             }
         }
 
