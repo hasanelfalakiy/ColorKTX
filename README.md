@@ -2,7 +2,7 @@
 [![](https://jitpack.io/v/hasanelfalakiy/ColorKTX.svg)](https://jitpack.io/#hasanelfalakiy/ColorKTX)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Library tema Material3 dengan fitur:
+Material3 theme library with features:
 - 20+ tema warna
 - Dark/Light mode
 - Dynamic Color (Android 12+)
