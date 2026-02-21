@@ -16,10 +16,14 @@ import io.github.andihasan.colorktx.app.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var currentThemeOrdinal: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val colorKtx = ColorKtx.getInstance(this)
-        colorKtx.isDynamicTheme = false
+        currentThemeOrdinal = colorKtx.staticTheme.ordinal // Simpan tema saat ini
+
+
+        /*colorKtx.isDynamicTheme = false
         val currentTheme = colorKtx.themeMode
 
         // Ambil state dari SharedPreferences
@@ -27,11 +31,11 @@ class MainActivity : AppCompatActivity() {
             1 -> AppCompatDelegate.MODE_NIGHT_NO
             2 -> AppCompatDelegate.MODE_NIGHT_YES
             else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-        }
+        }*/
 
-        // ColorKtx.Companion.applyToActivity(this)
+        ColorKtx.Companion.applyToActivity(this)
         super.onCreate(savedInstanceState)
-        ColorKtx.applyToActivity(this)
+        //ColorKtx.applyToActivity(this)
         // enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -78,15 +82,12 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    /*override fun onResume() {
-        super.onResume()
+    override fun onRestart() {
+        super.onRestart()
+        // Cek jika tema di SharedPreferences berbeda dengan tema yang sedang dipakai Activity
         val colorKtx = ColorKtx.getInstance(this)
-        val theme = colorKtx.getTheme()
-        colorKtx.themeMode = when (theme) {
-            1 -> ThemeMode.LIGHT
-            2 -> ThemeMode.DARK
-            else -> ThemeMode.AUTO
+        if (currentThemeOrdinal != colorKtx.staticTheme.ordinal) {
+            recreate() // Paksa activity untuk refresh tema
         }
-        recreate() // refresh UI
-    }*/
+    }
 }
