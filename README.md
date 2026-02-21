@@ -26,7 +26,7 @@ dependencies {
 }
 ```
 ### Usage
-Theming is handled by ColorKtx class. It is a singleton class and you can get the ThemeEngine instance as follows:
+Theming is handled by ColorKtx class. It is a singleton class and you can get the ColorKtx instance as follows:
 ```kotlin
 val colorKtx = ColorKtx.getInstance(context)
 ```
