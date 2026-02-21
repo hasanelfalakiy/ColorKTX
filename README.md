@@ -8,8 +8,9 @@ Library tema Material3 dengan fitur:
 - Compose support
 - True Black mode
 
-## Install
-
+## How to use
+### Getting Started
+Add the following gradle dependency to your build.gradle.kts:
 ```kotlin
 // settings.gradle.kts
 dependencyResolutionManagement {
@@ -21,26 +22,7 @@ dependencyResolutionManagement {
 
 // build.gradle.kts (app)
 dependencies {
-    implementation("com.github.andihasan:ColorKTX:1.0.0")
-}
-```
-
-## Usage
-
-```kotlin
-// In Application class
-ColorKtx.applyToActivities(this)
-
-// In Activity
-ColorKtx.applyToActivity(this)
-```
-
-## How to use
-### Getting Started
-Add the following gradle dependency to your build.gradle.kts:
-```build.gradle.kts
-dependencies {
-  implementation("io.github.hasanelfalakiy.colorktx:colorktx:${version}")
+    implementation("com.github.andihasan:ColorKTX:${version}")
 }
 ```
 ### Usage
