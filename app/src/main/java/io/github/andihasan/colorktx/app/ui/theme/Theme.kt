@@ -2,7 +2,6 @@
 
 package io.github.andihasan.colorktx.app.ui.theme
 
-import android.annotation.SuppressLint
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -51,7 +50,6 @@ private fun generateHarmonizedColors(primary: Color, isDark: Boolean): Pair<Colo
     }
 }
 
-@SuppressLint("LocalContextConfigurationRead")
 @Composable
 fun ColorKTXTheme(
     content: @Composable () -> Unit
@@ -61,19 +59,12 @@ fun ColorKTXTheme(
     val colorKtx = remember { ColorKtx.getInstance(context) }
 
     // Logika penentuan dark mode berdasarkan ThemeMode (LIGHT = 1, DARK = 2, AUTO = 0)
+    // Perhatian: ColorKtx.applyToActivity harus dipanggil SEBELUM setContent di Activity
+    // untuk memastikan configuration night mode sudah diupdate dengan benar
     val darkTheme = when (colorKtx.themeMode) {
         ThemeMode.LIGHT -> false
         ThemeMode.DARK -> true
-        else -> isSystemInDarkTheme() // Follow System
-    }
-
-    // SOLUSI: Buat Context khusus yang mengikuti variabel darkTheme kita
-    val themedContext = remember(context, darkTheme) {
-        val configuration = android.content.res.Configuration(context.resources.configuration)
-        configuration.uiMode = (configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK.inv()) or
-                if (darkTheme) android.content.res.Configuration.UI_MODE_NIGHT_YES
-                else android.content.res.Configuration.UI_MODE_NIGHT_NO
-        context.createConfigurationContext(configuration)
+        else -> isSystemInDarkTheme() // Follow System - membaca dari context yang sudah diupdate
     }
 
     val colorScheme = when {
@@ -81,9 +72,9 @@ fun ColorKTXTheme(
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
         else -> {
-            // Gunakan themedContext untuk mengambil warna primer agar tidak salah folder res
+            // Ambil warna primer dari resource menggunakan context
             val primaryColorRes = colorKtx.staticTheme.primaryColor
-            val primaryColor = Color(themedContext.getColor(primaryColorRes))
+            val primaryColor = Color(context.getColor(primaryColorRes))
             
             // Generate warna sekunder dan tersier yang harmonis
             val (secondaryColor, tertiaryColor) = generateHarmonizedColors(primaryColor, darkTheme)
@@ -96,11 +87,15 @@ fun ColorKTXTheme(
                     onSecondary = Color.White,
                     tertiary = tertiaryColor,
                     onTertiary = Color.White,
-                    // Implementasi True Black jika aktif
+                    // Warna surface dan background untuk dark theme
                     surface = if (colorKtx.isTrueBlack) Color.Black else Color(0xFF1C1B1F),
-                    background = if (colorKtx.isTrueBlack) Color.Black else Color(0xFF1C1B1F),
                     onSurface = if (colorKtx.isTrueBlack) Color.White else Color(0xFFE3E2E6),
-                    onBackground = if (colorKtx.isTrueBlack) Color.White else Color(0xFFE3E2E6)
+                    background = if (colorKtx.isTrueBlack) Color.Black else Color(0xFF1C1B1F),
+                    onBackground = if (colorKtx.isTrueBlack) Color.White else Color(0xFFE3E2E6),
+                    // Warna surface variant
+                    surfaceVariant = Color(0xFF49454F),
+                    onSurfaceVariant = Color(0xFFCAC4D0),
+                    outline = Color(0xFF938F99)
                 )
             } else {
                 lightColorScheme(
@@ -109,7 +104,16 @@ fun ColorKTXTheme(
                     secondary = secondaryColor,
                     onSecondary = Color.White,
                     tertiary = tertiaryColor,
-                    onTertiary = Color.White
+                    onTertiary = Color.White,
+                    // Warna surface dan background untuk light theme - PENTING!
+                    surface = Color(0xFFFEF7FF), // Background terang
+                    onSurface = Color(0xFF1D1B20), // Teks gelap untuk contrast
+                    background = Color(0xFFFEF7FF), // Background terang
+                    onBackground = Color(0xFF1D1B20), // Teks gelap
+                    // Warna surface variant
+                    surfaceVariant = Color(0xFFE7E0EC),
+                    onSurfaceVariant = Color(0xFF49454F),
+                    outline = Color(0xFF79747E)
                 )
             }
         }
