@@ -22,7 +22,7 @@ dependencyResolutionManagement {
 
 // build.gradle.kts (app)
 dependencies {
-    implementation("com.github.andihasan:ColorKTX:${version}")
+    implementation("com.github.hasanelfalakiy:ColorKTX:${version}")
 }
 ```
 ### Usage
